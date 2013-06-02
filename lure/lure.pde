@@ -13,7 +13,7 @@ void setup()
 void draw()
 {
   background( 30, 20, 40 );
-//  worm.draw();
+  worm.draw();
   mountain.draw();
   stroke( 0, 255, 255 );
   line( width * 0.25, height / 2, width * 0.75, height / 2 );
@@ -68,13 +68,22 @@ class Mountain
  Mountain()
  {
    segments = new ArrayList<PVector>();
-   for( int i = 0; i < 20; ++i )
+   float left = width * 0.35;
+   float right = width * 0.85;
+   float ground = height * 0.4;
+   segments.add( new PVector( left - 32, ground + random(6, 18) ) );
+   segments.add( new PVector( left, ground ) );
+   for( int i = 1; i < 19; ++i )
    {
-     segments.add( new PVector( map(i, 0, 20, width * 0.3,  width * 0.8 ), height * 0.3 + random(-20, 20) ) );
+     float y = ground - 10 - noise(i) * 40;
+     segments.add( new PVector( map(i, 0, 20, left,  right ), y ) );
    }
+   segments.add( new PVector( right, ground ) );
+   segments.add( new PVector( right + 32, ground + random(6, 18) ) );
  }
  void draw()
  {
+   strokeWeight( 1 );
    stroke( 255 );
    noFill();
    beginShape();
@@ -94,9 +103,9 @@ class Worm
  {
    segments = new ArrayList<Node>();
    springs = new ArrayList<Spring>();
-   for( int i = 0; i < 20; ++i )
+   for( int i = 0; i < 8; ++i )
    {
-     segments.add( new Node( map(i, 0, 20, width/4, 3 * width/4), height / 2 + random(-20, 20) ) );
+     segments.add( new Node( map(i, 0, 7, width * 0.48, width * 0.52 ), height * 0.7 + noise(i * 0.2) * 8 ) );
    }
    for( int i = 0; i < segments.size() - 1; ++i )
    {
@@ -109,7 +118,8 @@ class Worm
    {
      s.update();
    }
-   stroke( 255 );
+   stroke( 255, 20, 40 );
+   strokeWeight( 4 );
    noFill();
    beginShape();
    for( Node n : segments )
