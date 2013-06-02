@@ -15,6 +15,11 @@ void draw()
   background( 30, 20, 40 );
   worm.draw();
   mountain.draw();
+  drawWater();
+}
+
+void drawWater()
+{
   stroke( 0, 255, 255 );
   line( width * 0.25, height / 2, width * 0.75, height / 2 );
   line( width * 0.1, height / 2 + 3, width * 0.9, height / 2 + 3 );
@@ -23,15 +28,26 @@ void draw()
 
 void keyPressed()
 {
-  switch( key )
+  int index = (int)random(7);
+  float force = random( -0.2, 0.2 );
+  String top = "qweruiop";
+  String middle = "asdfjkl;";
+  String bottom = "zxcvm,./";
+  if( top.indexOf( key ) != -1 )
   {
-    case 'f':
-      worm.flex( 0 );
-    break;
-    case 'j':
-      worm.flex( 1 );
-    break;
+    index = top.indexOf( key );
+    force = -1;
   }
+  else if( middle.indexOf( key ) != -1 )
+  {
+    index = middle.indexOf( key );
+  }
+  else if( bottom.indexOf( key ) != -1 )
+  {
+    index = bottom.indexOf( key );
+    force = 1;
+  }
+  worm.flex( index, force );
 }
 
 class Node
@@ -60,39 +76,6 @@ class Spring
     float distance = dist( a.x, a.y, b.x, b.y );
     
   }
-}
-
-class Mountain
-{
-   ArrayList<PVector> segments;
- Mountain()
- {
-   segments = new ArrayList<PVector>();
-   float left = width * 0.35;
-   float right = width * 0.85;
-   float ground = height * 0.4;
-   segments.add( new PVector( left - 32, ground + random(6, 18) ) );
-   segments.add( new PVector( left, ground ) );
-   for( int i = 1; i < 19; ++i )
-   {
-     float y = ground - 10 - noise(i) * 40;
-     segments.add( new PVector( map(i, 0, 20, left,  right ), y ) );
-   }
-   segments.add( new PVector( right, ground ) );
-   segments.add( new PVector( right + 32, ground + random(6, 18) ) );
- }
- void draw()
- {
-   strokeWeight( 1 );
-   stroke( 255 );
-   noFill();
-   beginShape();
-   for( PVector n : segments )
-   {
-     vertex( n.x, n.y );
-   }
-   endShape();
- }
 }
 
 class Worm
@@ -129,8 +112,9 @@ class Worm
    endShape();
  }
  
- void flex( int i )
+ void flex( int segment, float force )
  {
-   segments.get(i);
+   segments.get(segment);
+   println( "Flex: " + segment + ", " + force );
  }
 }
