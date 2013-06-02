@@ -58,16 +58,16 @@ void keyPressed()
   {
     index = top.indexOf( lower_key );
     force.y = 1;
-    force.x = map( index, 0, 7, 0.5, -0.5 );
+    force.x = map( index, 0, 7, -0.5, 0.5 );
   } else if ( middle.indexOf( lower_key ) != -1 )
   {
     index = middle.indexOf( lower_key );
-    force.x = map( index, 0, 7, 0.5, -0.5 );
+    force.x = map( index, 0, 7, -0.5, 0.5 );
   } else if ( bottom.indexOf( lower_key ) != -1 )
   {
     index = bottom.indexOf( lower_key );
     force.y = -1;
-    force.x = map( index, 0, 7, 0.8, -0.8 );
+    force.x = map( index, 0, 7, -0.8, 0.8 );
   }
   worm.flex( index, force );
 }
@@ -101,17 +101,27 @@ class Node
 class Spring
 {
   float rest_length;
-  float stiffness = 0.5;
+  float stiffness;
   Node a, b;
-  Spring( Node _a, Node _b, float _rest_length )
+  Spring( Node _a, Node _b, float _rest_length, float _stiffness )
   {
     a = _a;
     b = _b;
     rest_length = _rest_length;
+    stiffness = _stiffness;
   }
   void update()
   {
-    float distance = dist( a.x, a.y, b.x, b.y );
+    float dx = b.x - a.x;
+    float dy = b.y - a.y;
+    float distance = sqrt( dx * dx + dy * dy );
+    float delta = rest_length - distance;
+    float offsetX = (delta * dx / distance) / 2 * stiffness;
+    float offsetY = (delta * dy / distance) / 2 * stiffness;
+    a.x -= offsetX;
+    a.y -= offsetY;
+    b.x += offsetX;
+    b.y += offsetY;
   }
 }
 
@@ -135,13 +145,13 @@ class Worm
     }
     for ( int i = 0; i < segments.size() - 1; ++i )
     {
-      springs.add( new Spring( segments.get(i), segments.get(i + 1), 5 ) );
+      springs.add( new Spring( segments.get(i), segments.get(i + 1), 3, 0.4 ) );
     }
   }
   float top()
   {
     float t = height;
-    for( Node n : segments )
+    for ( Node n : segments )
     {
       t = min( n.y, t );
     }
@@ -157,19 +167,7 @@ class Worm
     {
       health = min( health + 0.001, 1.0 );
     }
-//    float vx = x - px;
-//    float vy = y - py;
-//    float cx = x;
-//    float cy = y;
-//    x = x + vx * damping;
-//    y = y + vy * damping;
-//    px = cx;
-//    py = cy;
-//    // clamp to ends
-//    y += 0.04f;
-//    y = min( height - 8, max( y, water_surface ) );
-//    x = min( width, max( 0, x ) );
-    for( Node n : segments )
+    for ( Node n : segments )
     {
       n.update();
     }
@@ -194,8 +192,8 @@ class Worm
   void flex( int segment, PVector force )
   {
     Node s = segments.get(segment);
-    s.y += force.y * health * health * 1.0;
-    s.x += force.x * health * health * 0.5;
+    s.y += force.y * health * health;
+    s.x += force.x * health * health;
   }
 }
 
