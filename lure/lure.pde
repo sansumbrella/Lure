@@ -99,34 +99,6 @@ class Spring
   }
 }
 
-class Fish
-{
-  void draw()
-  {
-    pushMatrix();
-    translate( width / 4, height * 0.6 );
-    noStroke();
-    fill( 255, 255, 0 );
-    beginShape();
-    for( int i = 0; i < 4; ++i )
-    {
-      float x = cos( i * PI / 2 ) * 12;
-      float y = sin( i * PI / 2 ) * 12;
-      vertex( x, y );
-    }
-    endShape();
-    beginShape();
-    for( int i = 0; i < 3; ++i )
-    {
-      float x = cos( i * TWO_PI / 3 ) * 8 - 12;
-      float y = sin( i * TWO_PI / 3 ) * 8;
-      vertex( x, y );
-    }
-    endShape();
-    popMatrix();
-  }
-}
-
 class Worm
 {
   ArrayList<Node> segments;
