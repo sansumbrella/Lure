@@ -19,6 +19,7 @@ void setup()
 void draw()
 {
   background( 30, 20, 40 );
+  worm.update();
   worm.draw();
   mountain.draw();
   drawWater();
@@ -121,10 +122,19 @@ class Worm
       springs.add( new Spring( segments.get(i), segments.get(i + 1), 5 ) );
     }
     oxygenated = color(255, 20, 40);
-    depleted = color( 100, 20, 100 );
+    depleted = color( 80, 20, 80 );
   }
-  void draw()
+  void update()
   {
+    if ( y > suffocation_line )
+    {
+      health = max( health - 0.002, 0.0 );
+    }
+    else
+    {
+      health = min( health + 0.001, 1.0 );
+    }
+
     y += 0.25;
     float vx = x - px;
     float vy = y - py;
@@ -139,8 +149,11 @@ class Worm
     {
       s.update();
     }
+  }
+  void draw()
+  {
     noFill();
-    stroke( lerpColor( depleted, oxygenated, health ) );
+    stroke( lerpColor( depleted, oxygenated, health * health ) );
     strokeWeight( 3 );
     pushMatrix();
     translate( x, y );
@@ -156,9 +169,8 @@ class Worm
   void flex( int segment, PVector force )
   {
     //   segments.get(segment);
-    y += force.y;
-    x += force.x;
-    println( "Flex: " + segment + ", " + force.y );
+    y += force.y * health * 2.25;
+    x += force.x * health * health * 2.25;
   }
 }
 

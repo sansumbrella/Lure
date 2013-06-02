@@ -1,0 +1,19 @@
+TODO:
+[x] Start a project
+[x] Draw something to screen
+[x] Draw water
+[x] Draw mountain
+[x] Draw worm
+[x] Worm sinking
+[x] Basic user interaction
+[x] Worm health (shown by color and strength of motion)
+
+[] User interaction with physics
+[] Simple verlet physics engine for worm body
+[] - Node
+[] - Spring
+
+
+
+[] Fish attraction
+[] Scoring system: time X size of fish
