@@ -103,7 +103,6 @@ class Worm
     s.y += force.y * health * 2.0;
     s.x += force.x * health * 2.0;
     writhingness += abs(force.y * health);
-    println( "Writhingness: " + writhingness );
   }
 }
 

@@ -53,7 +53,7 @@ void keyPressed()
   String top = "qwertyuiop";
   String middle = "asdfghjkl;";
   String bottom = "zxcvbnm,./";
-  String lower_key = String.valueOf(key).toLowerCase();
+  String lower_key = String.valueOf(key);
   if ( top.indexOf( lower_key ) != -1 )
   {
     index = floor( map( top.indexOf( lower_key ), 0, top.length(), 0, worm.numSegments() ) );
