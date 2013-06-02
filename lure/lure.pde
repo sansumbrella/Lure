@@ -49,24 +49,23 @@ void drawWater()
 void keyPressed()
 {
   int index = (int)random(worm.numSegments() - 0.0001);
-  PVector force = new PVector( random( -0.25, 0.25 ), random( -0.5, 0.5 ) );
+  PVector force = new PVector( random( -0.5, 0.5 ), random( -0.4, 0.5 ) );
   String top = "qwertyuiop";
   String middle = "asdfghjkl;";
   String bottom = "zxcvbnm,./";
-  String lower_key = key;
-  if ( top.indexOf( lower_key ) != -1 )
+  if ( top.indexOf( key ) != -1 )
   {
-    index = floor( map( top.indexOf( lower_key ), 0, top.length(), 0, worm.numSegments() ) );
+    index = floor( map( top.indexOf( key ), 0, top.length(), 0, worm.numSegments() ) );
     force.y = 1;
-    force.x = map( index, 0, worm.numSegments(), -0.5, 0.5 );
-  } else if ( middle.indexOf( lower_key ) != -1 )
+    force.x = map( index, 0, worm.numSegments(), -0.8, 0.8 );
+  } else if ( middle.indexOf( key ) != -1 )
   {
-    index = floor( map( middle.indexOf( lower_key ), 0, middle.length(), 0, worm.numSegments() ) );
-    force.x = map( index, 0, worm.numSegments(), -0.5, 0.5 );
+    index = floor( map( middle.indexOf( key ), 0, middle.length(), 0, worm.numSegments() ) );
+    force.x = map( index, 0, worm.numSegments(), -0.8, 0.8 );
     force.y -= 0.25;
-  } else if ( bottom.indexOf( lower_key ) != -1 )
+  } else if ( bottom.indexOf( key ) != -1 )
   {
-    index = floor( map( bottom.indexOf( lower_key ), 0, bottom.length(), 0, worm.numSegments() ) );
+    index = floor( map( bottom.indexOf( key ), 0, bottom.length(), 0, worm.numSegments() ) );
     force.y = -1;
     force.x = map( index, 0, worm.numSegments(), -0.8, 0.8 );
   }
