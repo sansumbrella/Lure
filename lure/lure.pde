@@ -147,6 +147,10 @@ class Worm
     {
       springs.add( new Spring( segments.get(i), segments.get(i + 1), 3, 0.4 ) );
     }
+    for ( int i = 0; i < segments.size() - 2; ++i )
+    {
+      springs.add( new Spring( segments.get(i), segments.get(i + 2), 6, 0.01 ) );
+    }
   }
   float top()
   {
