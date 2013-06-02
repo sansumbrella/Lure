@@ -7,13 +7,18 @@ TODO:
 [x] Worm sinking
 [x] Basic user interaction
 [x] Worm health (shown by color and strength of motion)
+[x] Draw a fish
 
-[] User interaction with physics
+[] Fish motion
+[] Fish attraction
+
+[] Segment-based user interaction
 [] Simple verlet physics engine for worm body
 [] - Node
 [] - Spring
 
-
-
-[] Fish attraction
+[] Death info
+[] Ett info
 [] Scoring system: time X size of fish
+
+
