@@ -80,6 +80,10 @@ class Worm
   }
   void draw()
   {
+    noStroke();
+    fill( color( oxygenated, 10 ) );
+    PVector c = center();
+    ellipse( c.x, c.y, writhingness * 48.0, writhingness * 48.0 );
     noFill();
     stroke( lerpColor( depleted, oxygenated, health * health ) );
     strokeWeight( 3 );
@@ -89,9 +93,6 @@ class Worm
       vertex( n.x, n.y );
     }
     endShape();
-    strokeWeight( 4 );
-    PVector c = center();
-    ellipse( c.x, c.y, writhingness * 48.0, writhingness * 48.0 );
   }
 
   void flex( int segment, PVector force )
