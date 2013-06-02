@@ -63,6 +63,7 @@ void keyPressed()
   {
     index = middle.indexOf( lower_key );
     force.x = map( index, 0, 7, -0.5, 0.5 );
+    force.y -= 0.25;
   } else if ( bottom.indexOf( lower_key ) != -1 )
   {
     index = bottom.indexOf( lower_key );
@@ -144,12 +145,12 @@ class Worm
       segments.add( new Node( x + map(i, 0, 7, 0, 21 ), y + noise(i * 0.2) * 12 ) );
     }
     for ( int i = 0; i < segments.size() - 1; ++i )
-    {
+    { // connect to immediate neighbor strongly
       springs.add( new Spring( segments.get(i), segments.get(i + 1), 3, 0.4 ) );
     }
     for ( int i = 0; i < segments.size() - 2; ++i )
-    {
-      springs.add( new Spring( segments.get(i), segments.get(i + 2), 6, 0.05 ) );
+    { // connect to next neighbor weakly
+      springs.add( new Spring( segments.get(i), segments.get(i + 2), 6, 0.1 ) );
     }
   }
   float top()
@@ -165,11 +166,15 @@ class Worm
   {
     if ( top() > suffocation_line )
     {
-      health = max( health - 0.002, 0.0 );
+      health = max( health - 0.001, 0.0 );
     }
     else
     {
       health = min( health + 0.001, 1.0 );
+    }
+    for( Node n : segments )
+    {
+      n.y += 0.03;
     }
     for ( Node n : segments )
     {
@@ -196,8 +201,8 @@ class Worm
   void flex( int segment, PVector force )
   {
     Node s = segments.get(segment);
-    s.y += force.y * health * health * 2.0;
-    s.x += force.x * health * health * 2.0;
+    s.y += force.y * health * 2.0;
+    s.x += force.x * health * 2.0;
   }
 }
 
