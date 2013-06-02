@@ -1,6 +1,7 @@
 
 Worm worm;
 Mountain mountain;
+Fish fish;
 
 float suffocation_line;
 float water_surface;
@@ -11,6 +12,7 @@ void setup()
   smooth();
   worm = new Worm();
   mountain = new Mountain();
+  fish = new Fish();
 
   water_surface = height * 0.5;
   suffocation_line = height * 0.55;
@@ -19,9 +21,10 @@ void setup()
 void draw()
 {
   background( 30, 20, 40 );
+  mountain.draw();
   worm.update();
   worm.draw();
-  mountain.draw();
+  fish.draw();
   drawWater();
 }
 
@@ -93,6 +96,34 @@ class Spring
   void update()
   {
     float distance = dist( a.x, a.y, b.x, b.y );
+  }
+}
+
+class Fish
+{
+  void draw()
+  {
+    pushMatrix();
+    translate( width / 4, height * 0.6 );
+    noStroke();
+    fill( 255, 255, 0 );
+    beginShape();
+    for( int i = 0; i < 4; ++i )
+    {
+      float x = cos( i * PI / 2 ) * 12;
+      float y = sin( i * PI / 2 ) * 12;
+      vertex( x, y );
+    }
+    endShape();
+    beginShape();
+    for( int i = 0; i < 3; ++i )
+    {
+      float x = cos( i * TWO_PI / 3 ) * 8 - 12;
+      float y = sin( i * TWO_PI / 3 ) * 8;
+      vertex( x, y );
+    }
+    endShape();
+    popMatrix();
   }
 }
 
