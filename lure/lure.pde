@@ -9,13 +9,13 @@ float water_surface;
 void setup()
 {
   size( 640, 480 );
-  smooth();
+  water_surface = height * 0.5;
+  suffocation_line = height * 0.55;
+
   worm = new Worm();
   mountain = new Mountain();
   fish = new Fish();
-
-  water_surface = height * 0.5;
-  suffocation_line = height * 0.55;
+  smooth();
 }
 
 void draw()
@@ -75,10 +75,26 @@ void keyPressed()
 class Node
 {
   float x, y;
+  float px, py;
+  float damping = 0.9;
   Node( float _x, float _y )
   {
     x = _x;
     y = _y;
+    px = x;
+    py = y;
+  }
+
+  void update()
+  {
+    float vx = x - px;
+    float vy = y - py;
+    float cx = x;
+    float cy = y;
+    x = x + vx * damping;
+    y = y + vy * damping;
+    px = cx;
+    py = cy;
   }
 }
 
@@ -103,32 +119,37 @@ class Worm
 {
   ArrayList<Node> segments;
   ArrayList<Spring> springs;
-  float x, y;
-  float px, py;
   color oxygenated = color(255, 20, 40);
   color depleted = color( 60, 10, 60 );
   float health = 1.0;
   float damping = 0.85;
   Worm()
   {
-    x = width / 2;
-    y = height * 0.65;
-    px = x;
-    py = y;
+    float x = width / 2;
+    float y = water_surface;
     segments = new ArrayList<Node>();
     springs = new ArrayList<Spring>();
     for ( int i = 0; i < 8; ++i )
     {
-      segments.add( new Node( map(i, 0, 7, 0, 21 ), noise(i * 0.2) * 12 ) );
+      segments.add( new Node( x + map(i, 0, 7, 0, 21 ), y + noise(i * 0.2) * 12 ) );
     }
     for ( int i = 0; i < segments.size() - 1; ++i )
     {
       springs.add( new Spring( segments.get(i), segments.get(i + 1), 5 ) );
     }
   }
+  float top()
+  {
+    float t = height;
+    for( Node n : segments )
+    {
+      t = min( n.y, t );
+    }
+    return t;
+  }
   void update()
   {
-    if ( y > suffocation_line )
+    if ( top() > suffocation_line )
     {
       health = max( health - 0.002, 0.0 );
     }
@@ -136,18 +157,22 @@ class Worm
     {
       health = min( health + 0.001, 1.0 );
     }
-    float vx = x - px;
-    float vy = y - py;
-    float cx = x;
-    float cy = y;
-    x = x + vx * damping;
-    y = y + vy * damping;
-    px = cx;
-    py = cy;
-    // clamp to ends
-    y += 0.04f;
-    y = min( height - 8, max( y, water_surface ) );
-    x = min( width, max( 0, x ) );
+//    float vx = x - px;
+//    float vy = y - py;
+//    float cx = x;
+//    float cy = y;
+//    x = x + vx * damping;
+//    y = y + vy * damping;
+//    px = cx;
+//    py = cy;
+//    // clamp to ends
+//    y += 0.04f;
+//    y = min( height - 8, max( y, water_surface ) );
+//    x = min( width, max( 0, x ) );
+    for( Node n : segments )
+    {
+      n.update();
+    }
     for ( Spring s : springs )
     {
       s.update();
@@ -158,22 +183,19 @@ class Worm
     noFill();
     stroke( lerpColor( depleted, oxygenated, health * health ) );
     strokeWeight( 3 );
-    pushMatrix();
-    translate( x, y );
     beginShape();
     for ( Node n : segments )
     {
       vertex( n.x, n.y );
     }
     endShape();
-    popMatrix();
   }
 
   void flex( int segment, PVector force )
   {
-    //   segments.get(segment);
-    y += force.y * health * health * 0.8;
-    x += force.x * health * health * 0.5;
+    Node s = segments.get(segment);
+    s.y += force.y * health * health * 1.0;
+    s.x += force.x * health * health * 0.5;
   }
 }
 
