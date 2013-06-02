@@ -149,7 +149,7 @@ class Worm
     }
     for ( int i = 0; i < segments.size() - 2; ++i )
     {
-      springs.add( new Spring( segments.get(i), segments.get(i + 2), 6, 0.01 ) );
+      springs.add( new Spring( segments.get(i), segments.get(i + 2), 6, 0.05 ) );
     }
   }
   float top()
@@ -196,8 +196,8 @@ class Worm
   void flex( int segment, PVector force )
   {
     Node s = segments.get(segment);
-    s.y += force.y * health * health;
-    s.x += force.x * health * health;
+    s.y += force.y * health * health * 2.0;
+    s.x += force.x * health * health * 2.0;
   }
 }
 
