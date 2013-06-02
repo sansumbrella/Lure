@@ -34,19 +34,20 @@ void keyPressed()
   String top = "qweruiop";
   String middle = "asdfjkl;";
   String bottom = "zxcvm,./";
-  if( top.indexOf( key ) != -1 )
+  String lower_key = String.valueOf(key).toLowerCase();
+  if( top.indexOf( lower_key ) != -1 )
   {
-    index = top.indexOf( key );
+    index = top.indexOf( lower_key );
     force.y = 1;
     force.x = 0;
   }
-  else if( middle.indexOf( key ) != -1 )
+  else if( middle.indexOf( lower_key ) != -1 )
   {
-    index = middle.indexOf( key );
+    index = middle.indexOf( lower_key );
   }
-  else if( bottom.indexOf( key ) != -1 )
+  else if( bottom.indexOf( lower_key ) != -1 )
   {
-    index = bottom.indexOf( key );
+    index = bottom.indexOf( lower_key );
     force.y = -1;
     force.x = 0;
   }
