@@ -6,6 +6,7 @@ class Worm
   color depleted = color( 60, 10, 60 );
   float health = 1.0;
   float damping = 0.85;
+  float writhingness = 0;
   Worm()
   {
     float x = width / 2;
@@ -25,6 +26,10 @@ class Worm
       springs.add( new Spring( segments.get(i), segments.get(i + 2), 6, 0.1 ) );
     }
   }
+  int numSegments()
+  {
+    return segments.size();
+  }
   float top()
   {
     float t = height;
@@ -34,8 +39,22 @@ class Worm
     }
     return t;
   }
+  
+  PVector center()
+  {
+    PVector c = new PVector(0, 0);
+    for( Node n : segments )
+    {
+      c.x += n.x;
+      c.y += n.y;
+    }
+    c.div( segments.size() );
+    return c;
+  }
+  
   void update()
   {
+    writhingness *= 0.96;
     if ( top() > suffocation_line )
     {
       health = max( health - 0.001, 0.0 );
@@ -44,10 +63,11 @@ class Worm
     {
       health = min( health + 0.001, 1.0 );
     }
-    for( Node n : segments )
+    for ( Node n : segments )
     { // Apply Gravity
       n.y += 0.03;
       n.y = max( water_surface, min( n.y, height - 2 ) );
+      n.x = max( 0, min( n.x, width ) );
     }
     for ( Node n : segments )
     {
@@ -69,13 +89,18 @@ class Worm
       vertex( n.x, n.y );
     }
     endShape();
+    strokeWeight( 4 );
+    PVector c = center();
+    ellipse( c.x, c.y, writhingness * 48.0, writhingness * 48.0 );
   }
 
   void flex( int segment, PVector force )
   {
+    println( "Flex segment: " + segment );
     Node s = segments.get(segment);
     s.y += force.y * health * 2.0;
     s.x += force.x * health * 2.0;
+    writhingness += force.y * health;
   }
 }
 

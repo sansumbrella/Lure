@@ -48,27 +48,27 @@ void drawWater()
 
 void keyPressed()
 {
-  int index = (int)random(7);
+  int index = (int)random(worm.numSegments() - 0.0001);
   PVector force = new PVector( random( -0.25, 0.25 ), random( -0.5, 0.5 ) );
-  String top = "qweruiop";
-  String middle = "asdfjkl;";
-  String bottom = "zxcvm,./";
+  String top = "qwertyuiop";
+  String middle = "asdfghjkl;";
+  String bottom = "zxcvbnm,./";
   String lower_key = String.valueOf(key).toLowerCase();
   if ( top.indexOf( lower_key ) != -1 )
   {
-    index = top.indexOf( lower_key );
+    index = floor( map( top.indexOf( lower_key ), 0, top.length(), 0, worm.numSegments() ) );
     force.y = 1;
-    force.x = map( index, 0, 7, -0.5, 0.5 );
+    force.x = map( index, 0, worm.numSegments(), -0.5, 0.5 );
   } else if ( middle.indexOf( lower_key ) != -1 )
   {
-    index = middle.indexOf( lower_key );
-    force.x = map( index, 0, 7, -0.5, 0.5 );
+    index = floor( map( middle.indexOf( lower_key ), 0, middle.length(), 0, worm.numSegments() ) );
+    force.x = map( index, 0, worm.numSegments(), -0.5, 0.5 );
     force.y -= 0.25;
   } else if ( bottom.indexOf( lower_key ) != -1 )
   {
-    index = bottom.indexOf( lower_key );
+    index = floor( map( bottom.indexOf( lower_key ), 0, bottom.length(), 0, worm.numSegments() ) );
     force.y = -1;
-    force.x = map( index, 0, 7, -0.8, 0.8 );
+    force.x = map( index, 0, worm.numSegments(), -0.8, 0.8 );
   }
   worm.flex( index, force );
 }
