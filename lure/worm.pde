@@ -45,8 +45,9 @@ class Worm
       health = min( health + 0.001, 1.0 );
     }
     for( Node n : segments )
-    {
+    { // Apply Gravity
       n.y += 0.03;
+      n.y = max( water_surface, min( n.y, height - 2 ) );
     }
     for ( Node n : segments )
     {
