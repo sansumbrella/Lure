@@ -54,7 +54,8 @@ class Worm
   
   void update()
   {
-    writhingness *= 0.96;
+    writhingness *= lerp( 0.9, 0.99, health );
+    writhingness = max( 1.0, min( 5.0, writhingness ) );
     if ( top() > suffocation_line )
     {
       health = max( health - 0.001, 0.0 );
@@ -101,7 +102,8 @@ class Worm
     Node s = segments.get(segment);
     s.y += force.y * health * 2.0;
     s.x += force.x * health * 2.0;
-    writhingness += force.y * health;
+    writhingness += abs(force.y * health);
+    println( "Writhingness: " + writhingness );
   }
 }
 
