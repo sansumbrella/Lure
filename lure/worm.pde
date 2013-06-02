@@ -54,8 +54,8 @@ class Worm
   
   void update()
   {
-    writhingness *= lerp( 0.9, 0.99, health );
-    writhingness = max( 1.0, min( 5.0, writhingness ) );
+    writhingness *= lerp( 0.92, 0.99, health );
+    writhingness = max( 1.0, min( 6.0, writhingness ) );
     if ( top() > suffocation_line )
     {
       health = max( health - 0.001, 0.0 );
