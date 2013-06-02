@@ -122,7 +122,7 @@ class Worm
       springs.add( new Spring( segments.get(i), segments.get(i + 1), 5 ) );
     }
     oxygenated = color(255, 20, 40);
-    depleted = color( 80, 20, 80 );
+    depleted = color( 60, 10, 60 );
   }
   void update()
   {
