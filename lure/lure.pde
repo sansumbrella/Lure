@@ -105,9 +105,10 @@ class Worm
   ArrayList<Spring> springs;
   float x, y;
   float px, py;
-  color oxygenated;
-  color depleted;
+  color oxygenated = color(255, 20, 40);
+  color depleted = color( 60, 10, 60 );
   float health = 1.0;
+  float damping = 0.85;
   Worm()
   {
     x = width / 2;
@@ -124,8 +125,6 @@ class Worm
     {
       springs.add( new Spring( segments.get(i), segments.get(i + 1), 5 ) );
     }
-    oxygenated = color(255, 20, 40);
-    depleted = color( 60, 10, 60 );
   }
   void update()
   {
@@ -137,17 +136,18 @@ class Worm
     {
       health = min( health + 0.001, 1.0 );
     }
-
-    y += 0.25;
     float vx = x - px;
     float vy = y - py;
     float cx = x;
     float cy = y;
-    x = px + vx;
-    y = py + vy;
+    x = x + vx * damping;
+    y = y + vy * damping;
     px = cx;
     py = cy;
+    // clamp to ends
+    y += 0.04f;
     y = min( height - 8, max( y, water_surface ) );
+    x = min( width, max( 0, x ) );
     for ( Spring s : springs )
     {
       s.update();
@@ -172,8 +172,8 @@ class Worm
   void flex( int segment, PVector force )
   {
     //   segments.get(segment);
-    y += force.y * health * 2.25;
-    x += force.x * health * health * 2.25;
+    y += force.y * health * health * 0.8;
+    x += force.x * health * health * 0.5;
   }
 }
 
