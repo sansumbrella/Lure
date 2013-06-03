@@ -58,9 +58,12 @@ class Fish
     float distance_to_worm = sqrt(dx * dx + dy * dy);
     if ( distance_to_worm < worm.writhingness )
     { // Seek out prey
-      nose.x += dx * 0.005;
-      nose.y += dy * 0.005;
-      nose.x += 0.01;
+      float hunting_speed = (distance_to_worm < 100) ? map( distance_to_worm, 100, 0, 1.0, 0.1 )
+        : map( distance_to_worm, 640, 100, 0.1, 1.25 );
+      float nx = dx / distance_to_worm;
+      float ny = dy / distance_to_worm;
+      nose.x += nx * hunting_speed;
+      nose.y += ny * hunting_speed;
     }
     else
     { // Swim merrily along
@@ -68,7 +71,7 @@ class Fish
     }
     if ( distance_to_worm < 12 && worm.health > 0 )
     { // Devour living prey
-      if( !worm.eaten )
+      if ( !worm.eaten )
       {
         nose.x = w.x;
         nose.y = w.y;

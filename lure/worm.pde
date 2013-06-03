@@ -94,7 +94,7 @@ class Worm
 
   void update()
   {
-    writhingness *= lerp( 0.90, 0.99, health );
+    writhingness *= lerp( 0.85, 0.98, health );
     writhingness = min( max_writhing, writhingness );
     if ( flying )
     {
