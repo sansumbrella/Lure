@@ -8,7 +8,8 @@ class Worm
   float min_height = water_surface + 5;
   float max_height = height - 3;
   float writhingness = 0;
-
+  float flex_strength = 0;
+  Boolean flying = false;
   Worm()
   {
     float x = width / 2 - 40;
@@ -41,28 +42,32 @@ class Worm
     }
     return t;
   }
-  
+
   void setAerial()
   {
+    flying = true;
     min_height = 0;
-    for( Node n : segments )
+    flex_strength = 0.2;
+    for ( Node n : segments )
     {
-      n.damping = 0.99;
+      n.damping = 0.995;
     }
   }
   void setUnderwater()
   {
+    flying = false;
     min_height = water_surface + 5;
-    for( Node n : segments )
+    flex_strength = 2.0;
+    for ( Node n : segments )
     {
-      n.damping = 0.9;
+      n.damping = 0.89;
     }
   }
-  
+
   PVector center()
   {
     PVector c = new PVector(0, 0);
-    for( Node n : segments )
+    for ( Node n : segments )
     {
       c.x += n.x;
       c.y += n.y;
@@ -70,11 +75,18 @@ class Worm
     c.div( segments.size() );
     return c;
   }
-  
+
   void update()
   {
     writhingness *= lerp( 0.92, 0.99, health );
     writhingness = max( 1.0, min( 6.0, writhingness ) );
+    if ( flying )
+    {
+      if ( top() > water_surface + 2 )
+      {
+        setUnderwater();
+      }
+    }
     if ( top() > suffocation_line )
     {
       health = max( health - 0.001, 0.0 );
@@ -119,16 +131,16 @@ class Worm
   {
     println( "Flex segment: " + segment );
     Node s = segments.get(segment);
-    s.y += force.y * health * 2.0;
-    s.x += force.x * health * 2.0;
+    s.y += force.y * health * flex_strength;
+    s.x += force.x * health * flex_strength;
     writhingness += abs(force.y * health);
   }
-  
+
   void moveTo( PVector loc )
   {
     PVector c = center();
     loc.sub( c );
-    for( Node n : segments )
+    for ( Node n : segments )
     {
       n.x += loc.x;
       n.y += loc.y;
@@ -136,10 +148,10 @@ class Worm
       n.py = n.y;
     }
   }
-  
+
   void shove( PVector force, PVector loc )
   {
-    for( Node n : segments )
+    for ( Node n : segments )
     {
       float dx = loc.x - n.x;
       float dy = loc.y - n.y;

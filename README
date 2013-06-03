@@ -1,3 +1,8 @@
+You are a worm. You are struggling not to drown, but your frantic wriggling is attracting the attention of fish. Good luck.
+
+A game for the Fishing Jam: http://jam.legendaryfisher.com/forum/viewtopic.php?f=3&t=70
+Jam allowed for 7 days, but I ended up spending two afternoons and a morning on the game.
+
 TODO:
 [x] Start a project
 [x] Draw something to screen
@@ -13,8 +18,8 @@ TODO:
 [x] - Spring
 [x] Segment-based user interaction
 [x] Fixes needed to work in processing.js (String and noise adjustments)
-[x] Launch worm through air at start
-[] Restore friction/underwater boundaries
+[x] Launch worm through air at start (click to focus/start, type to play)
+[x] Restore friction/underwater boundaries on impact with surface
 
 [] Fish motion
 [] Fish attraction
