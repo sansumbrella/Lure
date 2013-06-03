@@ -23,11 +23,12 @@ TODO:
 [x] Background stars
 [x] Fish physics construction
 [x] Linear fish motion
-[] Fish wandering
-[] Fish attraction
+[x] Fish wandering
+[x] Basic fish attraction
+[] Fish casual to serious interest
+[] Get eaten by fish
 
-[] Death info
-[] Ett info
-[] Scoring system: time X size of fish
-
+[] Death info (drowned)
+[] Death info (ett)
+[] Keep score: time X size of fish (display in html)
 
