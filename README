@@ -31,11 +31,10 @@ TODO:
 [x] Death info on big text overlay (drowned)
 [x] Easier to move (more force from controls, death throes)
 [x] Keep track of time played
+[x] Get eaten by fish
+[x] Turn into bits when eaten
+[x] Death info (ett)
 
-[] Get eaten by fish
 [] Fish casual to serious interest (accelerate when close)
 
-[] Death info (ett)
 [] Keep score: time X size of fish (display in html)
-
-[] Physics spring for text overlay (node in center of screen tied to text node)

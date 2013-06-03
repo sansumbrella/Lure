@@ -38,7 +38,6 @@ void startGame()
   worm.setAerial();
   worm.moveTo( new PVector( 20, water_surface - 10 ) );
   worm.shove( new PVector( 25, -25 ), new PVector( 20, water_surface - 10 ) );
-  //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
   alive = true;
   game_start_ms = millis();

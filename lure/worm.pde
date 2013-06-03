@@ -8,7 +8,10 @@ class Worm
   float min_height = water_surface + 5;
   float max_height = height - 3;
   float writhingness = 0;
+  float max_writhing = 320;
   float flex_strength = 0;
+  float gravity = 0.03;
+  Boolean eaten = false;
   Boolean flying = false;
   Worm()
   {
@@ -63,10 +66,18 @@ class Worm
       n.damping = 0.89;
     }
   }
-  
+
   void setEaten()
   { // can still twitch
-    flex_strength = 0.2;
+    flex_strength = 0.1;
+    gravity = 0.04;
+    springs.clear();
+    for ( int i = segments.size() - 1; i >= 0; i -= 2 )
+    {
+      segments.remove(i);
+    }
+    //    shove( center(), new PVector( 0, 1 ) );
+    eaten = true;
   }
 
   PVector center()
@@ -84,7 +95,7 @@ class Worm
   void update()
   {
     writhingness *= lerp( 0.90, 0.99, health );
-    writhingness = max( 1.0, min( 320, writhingness ) );
+    writhingness = min( max_writhing, writhingness );
     if ( flying )
     {
       if ( top() > water_surface + 2 )
@@ -102,7 +113,7 @@ class Worm
     }
     for ( Node n : segments )
     { // Apply Gravity
-      n.y += 0.03;
+      n.y += gravity;
       n.y = max( min_height, min( n.y, max_height ) );
       n.x = max( 0, min( n.x, width ) );
     }
@@ -122,19 +133,32 @@ class Worm
   }
   void draw()
   {
-    noStroke();
-    fill( color( oxygenated, 10 ) );
-    PVector c = center();
-    ellipse( c.x, c.y, writhingness * 2, writhingness * 2 );
+    if ( writhingness > 1 )
+    {
+      noStroke();
+      fill( color( oxygenated, 10 ) );
+      PVector c = center();
+      ellipse( c.x, c.y, writhingness * 2, writhingness * 2 );
+    }
     noFill();
     stroke( lerpColor( depleted, oxygenated, health * health ) );
     strokeWeight( 3 );
-    beginShape();
-    for ( Node n : segments )
+    if ( ! eaten )
     {
-      curveVertex( n.x, n.y );
+      beginShape();
+      for ( Node n : segments )
+      {
+        curveVertex( n.x, n.y );
+      }
+      endShape();
     }
-    endShape();
+    else
+    {
+      for ( Node n : segments )
+      {
+        point( n.x, n.y );
+      }
+    }
   }
 
   void flex( int segment, PVector force )
@@ -143,7 +167,10 @@ class Worm
     Node s = segments.get(segment);
     s.y += force.y * factor * flex_strength;
     s.x += force.x * factor * flex_strength;
-    writhingness += abs(force.y * health) * 9;
+    if ( !eaten )
+    {
+      writhingness += abs(force.y * health) * 9;
+    }
   }
 
   void moveTo( PVector loc )
