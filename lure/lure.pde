@@ -11,6 +11,8 @@ Boolean running = false;
 Boolean alive = false;
 color bg_color = color( 30, 20, 40 );
 float odds = 0.996;
+int game_start_ms = 0;
+int game_end_ms = 0;
 
 void setup()
 {
@@ -38,6 +40,7 @@ void startGame()
   //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
   alive = true;
+  game_start_ms = millis();
 }
 
 void wormDrowned()
@@ -46,6 +49,8 @@ void wormDrowned()
   {
     alive = false;
     marquee.display( "You drowned." );
+    game_end_ms = millis();
+    println("Drowned after: " + (game_end_ms - game_start_ms) + "ms" );
   }
 }
 
@@ -55,6 +60,8 @@ void wormEaten()
   {
     alive = false;
     marquee.display( "You were eaten." );
+    game_end_ms = millis();
+    println("Eaten after: " + (game_end_ms - game_start_ms) + "ms" );
   }
 }
 

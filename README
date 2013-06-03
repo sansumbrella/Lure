@@ -27,11 +27,14 @@ TODO:
 [x] Basic fish attraction
 [x] Web wrapper for application
 [x] Big text overlay
-[] Fish casual to serious interest
-[] Easier to move (more force, more friction, more gravity)
+[x] Big text sillification (reflection, font choice)
+[x] Death info on big text overlay (drowned)
+[x] Easier to move (more force from controls, death throes)
+[x] Keep track of time played
+
+[] Fish casual to serious interest (accelerate when close)
 [] Get eaten by fish
 
-[] Death info on big text overlay (drowned)
 [] Death info (ett)
 [] Keep score: time X size of fish (display in html)
 
