@@ -66,9 +66,14 @@ class Fish
     { // Swim merrily along
       nose.x += 1;
     }
-    if ( distance_to_worm < 8 && worm.health > 0 )
+    if ( distance_to_worm < 12 && worm.health > 0 )
     { // Devour living prey
-      wormEaten( this );
+      if( !worm.eaten )
+      {
+        nose.x = w.x;
+        nose.y = w.y;
+        wormEaten( this );
+      }
     }
 
     for ( Node n : body )
