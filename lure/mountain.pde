@@ -38,5 +38,10 @@ class Mountain
     vertex( tl.x, height );
     endShape();
   }
+
+  float base()
+  {
+    return min( segments.get(0).y, segments.get(segments.size()-1).y );
+  }
 }
 

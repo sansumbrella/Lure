@@ -36,6 +36,15 @@ class Spring
     rest_length = _rest_length;
     stiffness = _stiffness;
   }
+
+  Spring( Node _a, Node _b, float _stiffness )
+  {
+    a = _a;
+    b = _b;
+    rest_length = dist( a.x, a.y, b.x, b.y );
+    stiffness = _stiffness;
+  }
+
   void update()
   {
     float dx = b.x - a.x;
@@ -50,3 +59,4 @@ class Spring
     b.y += offsetY;
   }
 }
+

@@ -17,8 +17,8 @@ void setup()
 
   worm = new Worm();
   mountain = new Mountain();
-  stars = new Starfield( 83, height * 0.45 );
-  fish = new Fish();
+  stars = new Starfield( 83, mountain.base() );
+  fish = new Fish(12);
   smooth();
   background( bg_color );
 }
@@ -39,6 +39,7 @@ void draw()
   if ( running )
   {
     worm.update();
+    fish.update();
   }
   stars.update();
   background( bg_color );

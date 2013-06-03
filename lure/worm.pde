@@ -93,7 +93,7 @@ class Worm
     }
     else
     {
-      health = min( health + 0.001, 1.0 );
+      health = min( health + 0.002, 1.0 );
     }
     for ( Node n : segments )
     { // Apply Gravity

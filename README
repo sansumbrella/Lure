@@ -1,7 +1,7 @@
 You are a worm. You are struggling not to drown, but your frantic wriggling is attracting the attention of fish. Good luck.
 
 A game for the Fishing Jam: http://jam.legendaryfisher.com/forum/viewtopic.php?f=3&t=70
-Jam allowed for 7 days, but I ended up spending two afternoons and a morning on the game.
+Jam allowed for up to 7 days, I spent about X amount of time
 
 TODO:
 [x] Start a project
@@ -21,8 +21,9 @@ TODO:
 [x] Launch worm through air at start (click to focus/start, type to play)
 [x] Restore friction/underwater boundaries on impact with surface
 [x] Background stars
-
-[] Fish motion
+[x] Fish physics construction
+[x] Linear fish motion
+[] Fish wandering
 [] Fish attraction
 
 [] Death info
