@@ -8,8 +8,7 @@ float suffocation_line;
 float water_surface;
 Boolean running = false;
 color bg_color = color( 30, 20, 40 );
-float odds = 0.995;
-int startFrame = 0;
+float odds = 0.996;
 
 void setup()
 {
@@ -34,7 +33,6 @@ void startGame()
   worm.shove( new PVector( 18, -20 ), new PVector( 20, water_surface - 10 ) );
   //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
-  startFrame = frameCount;
   addFish();
 }
 
@@ -52,11 +50,11 @@ void draw()
   background( bg_color );
   stars.draw();
   mountain.draw();
-  worm.draw();
   for ( Fish f : fish )
   {
     f.draw();
   }
+  worm.draw();
   drawWater();
 
   for ( int i = fish.size() - 1; i >= 0; --i )
