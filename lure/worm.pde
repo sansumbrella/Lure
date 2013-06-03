@@ -156,7 +156,7 @@ class Worm
       float dx = loc.x - n.x;
       float dy = loc.y - n.y;
       float dist2 = dx * dx + dy * dy;
-      dist2 = max( dist2, 0.25 );
+      dist2 = min( 24.0, max( dist2, 1.0 ) );
       n.x += force.x / dist2;
       n.y += force.y / dist2;
     }

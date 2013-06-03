@@ -20,6 +20,7 @@ TODO:
 [x] Fixes needed to work in processing.js (String and noise adjustments)
 [x] Launch worm through air at start (click to focus/start, type to play)
 [x] Restore friction/underwater boundaries on impact with surface
+[x] Background stars
 
 [] Fish motion
 [] Fish attraction

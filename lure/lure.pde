@@ -1,6 +1,7 @@
 
 Worm worm;
 Mountain mountain;
+Starfield stars;
 Fish fish;
 
 float suffocation_line;
@@ -16,8 +17,10 @@ void setup()
 
   worm = new Worm();
   mountain = new Mountain();
+  stars = new Starfield( 83, height * 0.45 );
   fish = new Fish();
   smooth();
+  background( bg_color );
 }
 
 void startGame()
@@ -26,7 +29,7 @@ void startGame()
   worm.writhingness = 1.0;
   worm.setAerial();
   worm.moveTo( new PVector( 20, water_surface - 10 ) );
-  worm.shove( new PVector( 20, -22 ), new PVector( 20, water_surface - 10 ) );
+  worm.shove( new PVector( 18, -20 ), new PVector( 20, water_surface - 10 ) );
 //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
 }
@@ -37,7 +40,9 @@ void draw()
   {
     worm.update();
   }
+  stars.update();
   background( bg_color );
+  stars.draw();
   mountain.draw();
   worm.draw();
   fish.draw();
