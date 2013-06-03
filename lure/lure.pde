@@ -15,6 +15,10 @@ int num_fish_tempted = 0;
 int game_start_ms = 0;
 int game_end_ms = 0;
 
+// HTML Elements
+var fish_counter = document.getElementById("fish_counter");
+var score_display = document.getElementById("score_display");
+
 void setup()
 {
   size( 640, 480 );
@@ -50,6 +54,7 @@ void wormDrowned()
     alive = false;
     marquee.display( "You drowned." );
     game_end_ms = millis();
+    displayScore( num_fish_tempted * 10 );
   }
 }
 
@@ -61,6 +66,15 @@ void wormEaten( Fish by_fish )
     marquee.display( "You were eaten." );
     game_end_ms = millis();
     worm.setEaten();
+    displayScore( num_fish_tempted * 10 * ceil(by_fish.size - 0.4) );
+  }
+}
+
+void displayScore( int score )
+{
+  if ( score_display != null )
+  {
+    score_display.textContent = "Final Score: " + score;
   }
 }
 
@@ -136,6 +150,11 @@ void mousePressed()
 void fishWasTempted()
 {
   num_fish_tempted += 1;
+  // update page
+  if ( fish_counter != null )
+  {
+    fish_counter.textContent = "Fish Tempted: " + num_fish_tempted;
+  }
 }
 
 void keyPressed()
