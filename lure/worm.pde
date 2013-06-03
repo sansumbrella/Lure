@@ -78,8 +78,8 @@ class Worm
 
   void update()
   {
-    writhingness *= lerp( 0.92, 0.99, health );
-    writhingness = max( 1.0, min( 6.0, writhingness ) );
+    writhingness *= lerp( 0.90, 0.99, health );
+    writhingness = max( 1.0, min( 320, writhingness ) );
     if ( flying )
     {
       if ( top() > water_surface + 2 )
@@ -115,7 +115,7 @@ class Worm
     noStroke();
     fill( color( oxygenated, 10 ) );
     PVector c = center();
-    ellipse( c.x, c.y, writhingness * 48.0, writhingness * 48.0 );
+    ellipse( c.x, c.y, writhingness * 2, writhingness * 2 );
     noFill();
     stroke( lerpColor( depleted, oxygenated, health * health ) );
     strokeWeight( 3 );
@@ -129,11 +129,10 @@ class Worm
 
   void flex( int segment, PVector force )
   {
-    println( "Flex segment: " + segment );
     Node s = segments.get(segment);
     s.y += force.y * health * flex_strength;
     s.x += force.x * health * flex_strength;
-    writhingness += abs(force.y * health);
+    writhingness += abs(force.y * health) * 9;
   }
 
   void moveTo( PVector loc )

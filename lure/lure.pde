@@ -2,12 +2,14 @@
 Worm worm;
 Mountain mountain;
 Starfield stars;
-Fish fish;
+ArrayList<Fish> fish;
 
 float suffocation_line;
 float water_surface;
 Boolean running = false;
 color bg_color = color( 30, 20, 40 );
+float odds = 0.995;
+int startFrame = 0;
 
 void setup()
 {
@@ -18,7 +20,7 @@ void setup()
   worm = new Worm();
   mountain = new Mountain();
   stars = new Starfield( 83, mountain.base() );
-  fish = new Fish(12);
+  fish = new ArrayList<Fish>();
   smooth();
   background( bg_color );
 }
@@ -30,8 +32,10 @@ void startGame()
   worm.setAerial();
   worm.moveTo( new PVector( 20, water_surface - 10 ) );
   worm.shove( new PVector( 18, -20 ), new PVector( 20, water_surface - 10 ) );
-//  worm.flex( 0, new PVector( 10, -10 ) );
+  //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
+  startFrame = frameCount;
+  addFish();
 }
 
 void draw()
@@ -39,15 +43,40 @@ void draw()
   if ( running )
   {
     worm.update();
-    fish.update();
+  }
+  for ( Fish f : fish )
+  {
+    f.update();
   }
   stars.update();
   background( bg_color );
   stars.draw();
   mountain.draw();
   worm.draw();
-  fish.draw();
+  for ( Fish f : fish )
+  {
+    f.draw();
+  }
   drawWater();
+
+  for ( int i = fish.size() - 1; i >= 0; --i )
+  {
+    if ( fish.get(i).isGone() )
+    {
+      fish.remove(i);
+    }
+  }
+
+  if ( fish.size() == 0 || random(1.0) > odds )
+  {
+    addFish();
+  }
+}
+
+void addFish()
+{
+  float size = random( 8, 16 );
+  fish.add( new Fish( 0, random( water_surface + size, height - size ), size ) );
 }
 
 void drawWater()

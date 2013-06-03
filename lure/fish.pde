@@ -5,25 +5,24 @@ class Fish
   ArrayList<Spring> springs;
   float size;
 
-  Fish( float _size )
+  Fish( float base_x, float base_y, float _size )
   {
     size = _size;
     body = new ArrayList<Node>();
     tail = new ArrayList<Node>();
     springs = new ArrayList<Spring>();
 
-    PVector nose = new PVector( 0, height * 0.6 );
     for ( int i = 0; i < 4; ++i )
     {
-      float x = nose.x + cos( i * PI / 2 ) * size;
-      float y = nose.y + sin( i * PI / 2 ) * size;
+      float x = base_x + cos( i * PI / 2 ) * size;
+      float y = base_y + sin( i * PI / 2 ) * size;
       body.add( new Node( x, y ) );
     }
 
     for ( int i = 0; i < 3; ++i )
     {
-      float x = nose.x + cos( i * TWO_PI / 3 ) * size * 0.667f - size;
-      float y = nose.y + sin( i * TWO_PI / 3 ) * size * 0.667f;
+      float x = base_x + cos( i * TWO_PI / 3 ) * size * 0.667f - size;
+      float y = base_y + sin( i * TWO_PI / 3 ) * size * 0.667f;
       tail.add( new Node( x, y ) );
     }
 
@@ -39,14 +38,32 @@ class Fish
     springs.add( new Spring( tail.get(1), tail.get(2), 0.6 ) );
     springs.add( new Spring( tail.get(2), tail.get(0), 0.6 ) );
     // connect tail to body
-    springs.add( new Spring( tail.get(0), body.get(1), 0.8 ) );
     springs.add( new Spring( tail.get(0), body.get(2), 0.8 ) );
-    springs.add( new Spring( tail.get(0), body.get(3), 0.8 ) );
+    springs.add( new Spring( tail.get(1), body.get(1), 0.8 ) );
+    springs.add( new Spring( tail.get(2), body.get(3), 0.8 ) );
+  }
+
+  Boolean isGone()
+  {
+    Node nose = body.get(0);
+    return nose.x > width + size * 2 || nose.x < - size * 2;
   }
 
   void update()
   {
-    body.get(0).x += 1;
+    Node nose = body.get(0);
+    PVector w = worm.center();
+    float dx = w.x - nose.x;
+    float dy = w.y - nose.y;
+    if( sqrt(dx * dx + dy * dy) < worm.writhingness )
+    {
+      nose.x += dx * 0.005;
+      nose.y += dy * 0.005;
+    }
+    else
+    {
+      nose.x += 1;
+    }
     for ( Node n : body )
     {
       n.update();
