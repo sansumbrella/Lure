@@ -69,7 +69,7 @@ class Worm
 
   void setEaten()
   { // can still twitch
-    flex_strength = 0.1;
+    flex_strength = 0.2;
     gravity = 0.04;
     springs.clear();
     for ( int i = segments.size() - 1; i >= 0; i -= 2 )
