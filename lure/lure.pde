@@ -34,8 +34,6 @@ void startGame()
 {
   marquee.display( "" );
   worm = new Worm();
-  worm.health = 1.0;
-  worm.writhingness = 1.0;
   worm.setAerial();
   worm.moveTo( new PVector( 20, water_surface - 10 ) );
   worm.shove( new PVector( 25, -25 ), new PVector( 20, water_surface - 10 ) );
