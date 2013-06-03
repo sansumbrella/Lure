@@ -6,6 +6,7 @@ Fish fish;
 float suffocation_line;
 float water_surface;
 Boolean running = false;
+color bg_color = color( 30, 20, 40 );
 
 void setup()
 {
@@ -21,9 +22,11 @@ void setup()
 
 void startGame()
 {
+  worm.health = 1.0;
+  worm.writhingness = 1.0;
   worm.setAerial();
   worm.moveTo( new PVector( 20, water_surface - 10 ) );
-  worm.shove( new PVector( 20, -24 ), new PVector( 20, water_surface - 10 ) );
+  worm.shove( new PVector( 20, -22 ), new PVector( 20, water_surface - 10 ) );
 //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
 }
@@ -34,7 +37,7 @@ void draw()
   {
     worm.update();
   }
-  background( 30, 20, 40 );
+  background( bg_color );
   mountain.draw();
   worm.draw();
   fish.draw();
@@ -77,17 +80,17 @@ void keyPressed()
   {
     index = floor( map( top.indexOf( key ), 0, top.length(), 0, worm.numSegments() ) );
     force.y = 1;
-    force.x = map( index, 0, worm.numSegments(), -0.8, 0.8 );
+    force.x = map( index, 0, worm.numSegments() - 1, -0.8, 0.8 );
   } else if ( middle.indexOf( key ) != -1 )
   {
     index = floor( map( middle.indexOf( key ), 0, middle.length(), 0, worm.numSegments() ) );
-    force.x = map( index, 0, worm.numSegments(), -0.8, 0.8 );
+    force.x = map( index, 0, worm.numSegments() - 1, -0.8, 0.8 );
     force.y -= 0.25;
   } else if ( bottom.indexOf( key ) != -1 )
   {
     index = floor( map( bottom.indexOf( key ), 0, bottom.length(), 0, worm.numSegments() ) );
     force.y = -1;
-    force.x = map( index, 0, worm.numSegments(), -0.8, 0.8 );
+    force.x = map( index, 0, worm.numSegments() - 1, -0.8, 0.8 );
   }
   worm.flex( index, force );
 }

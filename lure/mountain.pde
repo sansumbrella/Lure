@@ -21,7 +21,7 @@ class Mountain
  {
    strokeWeight( 1 );
    stroke( 220, 230, 255 );
-   noFill();
+   fill( bg_color );
    beginShape();
    for( PVector n : segments )
    {

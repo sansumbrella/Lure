@@ -16,17 +16,17 @@ class Worm
     float y = min_height;
     segments = new ArrayList<Node>();
     springs = new ArrayList<Spring>();
-    for ( int i = 0; i < 8; ++i )
+    for ( int i = 0; i < 10; ++i )
     {
-      segments.add( new Node( x + map(i, 0, 7, 0, 21 ), y + noise(i * 0.2) * 12 ) );
+      segments.add( new Node( x + map(i, 0, 9, 0, 25 ), y + noise(i * 0.2) * 12 ) );
     }
     for ( int i = 0; i < segments.size() - 1; ++i )
     { // connect to immediate neighbor strongly
-      springs.add( new Spring( segments.get(i), segments.get(i + 1), 3, 0.4 ) );
+      springs.add( new Spring( segments.get(i), segments.get(i + 1), 2.5, 0.4 ) );
     }
     for ( int i = 0; i < segments.size() - 2; ++i )
     { // connect to next neighbor weakly
-      springs.add( new Spring( segments.get(i), segments.get(i + 2), 6, 0.1 ) );
+      springs.add( new Spring( segments.get(i), segments.get(i + 2), 5, 0.1 ) );
     }
   }
   int numSegments()
@@ -156,7 +156,7 @@ class Worm
       float dx = loc.x - n.x;
       float dy = loc.y - n.y;
       float dist2 = dx * dx + dy * dy;
-      dist2 = max( dist2, 0.125 );
+      dist2 = max( dist2, 0.25 );
       n.x += force.x / dist2;
       n.y += force.y / dist2;
     }
