@@ -10,7 +10,8 @@ float water_surface;
 Boolean running = false;
 Boolean alive = false;
 color bg_color = color( 30, 20, 40 );
-float odds = 0.996;
+float odds = 0.995;
+int num_fish_tempted = 0;
 int game_start_ms = 0;
 int game_end_ms = 0;
 
@@ -40,6 +41,7 @@ void startGame()
   worm.shove( new PVector( 25, -25 ), new PVector( 20, water_surface - 10 ) );
   running = true;
   alive = true;
+  num_fish_tempted = 0;
   game_start_ms = millis();
 }
 
@@ -63,6 +65,7 @@ void wormEaten( Fish by_fish )
     game_end_ms = millis();
     worm.setEaten();
     println("Eaten after: " + (game_end_ms - game_start_ms) + "ms" );
+    println("Fish tempted: " + num_fish_tempted );
   }
 }
 
@@ -133,6 +136,11 @@ void drawWater()
 void mousePressed()
 {
   startGame();
+}
+
+void fishWasTempted()
+{
+  num_fish_tempted += 1;
 }
 
 void keyPressed()

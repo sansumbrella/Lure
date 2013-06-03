@@ -60,6 +60,7 @@ class Worm
   {
     flying = false;
     min_height = water_surface + 5;
+    writhingness += 44.0;
     flex_strength = 3.0;
     for ( Node n : segments )
     {

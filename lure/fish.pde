@@ -4,6 +4,8 @@ class Fish
   ArrayList<Node> tail;
   ArrayList<Spring> springs;
   float size;
+  color body_color;
+  Boolean was_tempted;
 
   Fish( float base_x, float base_y, float _size )
   {
@@ -11,6 +13,8 @@ class Fish
     body = new ArrayList<Node>();
     tail = new ArrayList<Node>();
     springs = new ArrayList<Spring>();
+    body_color =  color( ceil(random(2, 5)) * 50, 255, 0 ); 
+    was_tempted = false;
 
     for ( int i = 0; i < 4; ++i )
     {
@@ -64,19 +68,26 @@ class Fish
       float ny = dy / distance_to_worm;
       nose.x += nx * hunting_speed;
       nose.y += ny * hunting_speed;
+
+      if ( ! was_tempted )
+      {
+        was_tempted = true;
+        fishWasTempted();
+      }
+
+      if ( distance_to_worm < 12 && worm.health > 0 )
+      { // Devour living prey
+        if ( !worm.eaten )
+        {
+          nose.x = w.x;
+          nose.y = w.y;
+          wormEaten( this );
+        }
+      }
     }
     else
     { // Swim merrily along
       nose.x += 1;
-    }
-    if ( distance_to_worm < 12 && worm.health > 0 )
-    { // Devour living prey
-      if ( !worm.eaten )
-      {
-        nose.x = w.x;
-        nose.y = w.y;
-        wormEaten( this );
-      }
     }
 
     for ( Node n : body )
@@ -95,7 +106,7 @@ class Fish
   void draw()
   {
     noStroke();
-    fill( 255, 255, 0 );
+    fill( body_color );
     beginShape();
     for ( Node n : body )
     {
