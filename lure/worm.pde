@@ -18,7 +18,7 @@ class Worm
     springs = new ArrayList<Spring>();
     for ( int i = 0; i < 10; ++i )
     {
-      segments.add( new Node( x + map(i, 0, 9, 0, 25 ), y + noise(i * 0.2) * 12 ) );
+      segments.add( new Node( x + map(i, 0, 9, 0, 25 ), y + random( -3, 3 ) ) );
     }
     for ( int i = 0; i < segments.size() - 1; ++i )
     { // connect to immediate neighbor strongly
@@ -62,6 +62,11 @@ class Worm
     {
       n.damping = 0.89;
     }
+  }
+  
+  void setEaten()
+  { // can still twitch
+    flex_strength = 0.2;
   }
 
   PVector center()

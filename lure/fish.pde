@@ -55,16 +55,22 @@ class Fish
     PVector w = worm.center();
     float dx = w.x - nose.x;
     float dy = w.y - nose.y;
-    if( sqrt(dx * dx + dy * dy) < worm.writhingness )
-    {
+    float distance_to_worm = sqrt(dx * dx + dy * dy);
+    if ( distance_to_worm < worm.writhingness )
+    { // Seek out prey
       nose.x += dx * 0.005;
       nose.y += dy * 0.005;
       nose.x += 0.01;
     }
     else
-    {
+    { // Swim merrily along
       nose.x += 1;
     }
+    if ( distance_to_worm < 8 && worm.health > 0 )
+    { // Devour living prey
+      wormEaten( this );
+    }
+
     for ( Node n : body )
     {
       n.update();

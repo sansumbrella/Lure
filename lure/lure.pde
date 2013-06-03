@@ -32,11 +32,12 @@ void setup()
 void startGame()
 {
   marquee.display( "" );
+  worm = new Worm();
   worm.health = 1.0;
   worm.writhingness = 1.0;
   worm.setAerial();
   worm.moveTo( new PVector( 20, water_surface - 10 ) );
-  worm.shove( new PVector( 18, -20 ), new PVector( 20, water_surface - 10 ) );
+  worm.shove( new PVector( 25, -25 ), new PVector( 20, water_surface - 10 ) );
   //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
   alive = true;
@@ -54,13 +55,14 @@ void wormDrowned()
   }
 }
 
-void wormEaten()
+void wormEaten( Fish by_fish )
 {
   if ( alive )
   {
     alive = false;
     marquee.display( "You were eaten." );
     game_end_ms = millis();
+    worm.setEaten();
     println("Eaten after: " + (game_end_ms - game_start_ms) + "ms" );
   }
 }
