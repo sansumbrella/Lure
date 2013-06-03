@@ -33,7 +33,7 @@ class Marquee
 
     translate( 0, 2 * yOff );
     scale( 1, -0.5 );
-    fill( 100, 100, 25 );
+    fill( 100, 100, 75 );
     text( txt, 0, 0 );
     popMatrix();
   }
