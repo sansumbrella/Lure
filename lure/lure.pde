@@ -8,6 +8,7 @@ ArrayList<Fish> fish;
 float suffocation_line;
 float water_surface;
 Boolean running = false;
+Boolean alive = false;
 color bg_color = color( 30, 20, 40 );
 float odds = 0.996;
 
@@ -36,17 +37,25 @@ void startGame()
   worm.shove( new PVector( 18, -20 ), new PVector( 20, water_surface - 10 ) );
   //  worm.flex( 0, new PVector( 10, -10 ) );
   running = true;
-  addFish();
+  alive = true;
 }
 
 void wormDrowned()
 {
-  marquee.display( "You drowned." );
+  if ( alive )
+  {
+    alive = false;
+    marquee.display( "You drowned." );
+  }
 }
 
 void wormEaten()
 {
-  marquee.display( "You were eaten." );
+  if ( alive )
+  {
+    alive = false;
+    marquee.display( "You were eaten." );
+  }
 }
 
 void draw()
@@ -70,8 +79,9 @@ void draw()
     f.draw();
   }
   worm.draw();
-  drawWater();
   marquee.draw();
+  drawWater();
+
   // Take stock
   for ( int i = fish.size() - 1; i >= 0; --i )
   {
@@ -133,11 +143,11 @@ void keyPressed()
   {
     index = floor( map( middle.indexOf( key ), 0, middle.length(), 0, worm.numSegments() ) );
     force.x = map( index, 0, worm.numSegments() - 1, -0.8, 0.8 );
-    force.y -= 0.25;
+    force.y -= 0.5;
   } else if ( bottom.indexOf( key ) != -1 )
   {
     index = floor( map( bottom.indexOf( key ), 0, bottom.length(), 0, worm.numSegments() ) );
-    force.y = -1;
+    force.y = -1.2;
     force.x = map( index, 0, worm.numSegments() - 1, -0.8, 0.8 );
   }
   worm.flex( index, force );

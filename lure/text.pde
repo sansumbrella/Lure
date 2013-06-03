@@ -2,6 +2,7 @@
 class Marquee
 {
   int x, y;
+  int yOff = 8;
   int xOff = 0;
   PFont font;
   String txt = "";
@@ -9,21 +10,32 @@ class Marquee
   {
     x = _centerX;
     y = _baseline;
-    font = createFont("Lucida Handwriting", 24);
+    font = createFont("Lucida Handwriting", 36);
   }
-  
+
   void display( String text )
   {
     txt = text;
     textFont( font );
     xOff = floor( -textWidth( txt ) / 2 );
   }
-  
+
   void draw()
   {
     textFont( font );
-    fill( 255, 255, 150 );
     noStroke();
-    text( txt, x + xOff, y );
+
+    pushMatrix();
+    translate( x + xOff, y - yOff );
+
+    fill( 255, 255, 150 );
+    text( txt, 0, 0 );
+
+    translate( 0, 2 * yOff );
+    scale( 1, -0.5 );
+    fill( 100, 100, 25 );
+    text( txt, 0, 0 );
+    popMatrix();
   }
 }
+

@@ -57,7 +57,7 @@ class Worm
   {
     flying = false;
     min_height = water_surface + 5;
-    flex_strength = 2.0;
+    flex_strength = 3.0;
     for ( Node n : segments )
     {
       n.damping = 0.89;
@@ -109,6 +109,11 @@ class Worm
     {
       s.update();
     }
+
+    if ( health == 0 )
+    {
+      wormDrowned();
+    }
   }
   void draw()
   {
@@ -129,9 +134,10 @@ class Worm
 
   void flex( int segment, PVector force )
   {
+    float factor = health > 0.0 ? map( health, 0.0, 1.0, 0.1, 1.0 ) : 0.0;
     Node s = segments.get(segment);
-    s.y += force.y * health * flex_strength;
-    s.x += force.x * health * flex_strength;
+    s.y += force.y * factor * flex_strength;
+    s.x += force.x * factor * flex_strength;
     writhingness += abs(force.y * health) * 9;
   }
 
