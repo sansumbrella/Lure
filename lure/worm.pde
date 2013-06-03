@@ -127,7 +127,7 @@ class Worm
     beginShape();
     for ( Node n : segments )
     {
-      vertex( n.x, n.y );
+      curveVertex( n.x, n.y );
     }
     endShape();
   }
