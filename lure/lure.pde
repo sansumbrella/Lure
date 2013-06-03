@@ -2,6 +2,7 @@
 Worm worm;
 Mountain mountain;
 Starfield stars;
+Marquee marquee;
 ArrayList<Fish> fish;
 
 float suffocation_line;
@@ -20,12 +21,14 @@ void setup()
   mountain = new Mountain();
   stars = new Starfield( 83, mountain.base() );
   fish = new ArrayList<Fish>();
+  marquee = new Marquee( width / 2, (int)water_surface );
+  marquee.display( "Click to Start" );
   smooth();
-  background( bg_color );
 }
 
 void startGame()
 {
+  marquee.display( "" );
   worm.health = 1.0;
   worm.writhingness = 1.0;
   worm.setAerial();
@@ -36,8 +39,19 @@ void startGame()
   addFish();
 }
 
+void wormDrowned()
+{
+  marquee.display( "You drowned." );
+}
+
+void wormEaten()
+{
+  marquee.display( "You were eaten." );
+}
+
 void draw()
 {
+  // Update
   if ( running )
   {
     worm.update();
@@ -47,6 +61,7 @@ void draw()
     f.update();
   }
   stars.update();
+  // Render
   background( bg_color );
   stars.draw();
   mountain.draw();
@@ -56,7 +71,8 @@ void draw()
   }
   worm.draw();
   drawWater();
-
+  marquee.draw();
+  // Take stock
   for ( int i = fish.size() - 1; i >= 0; --i )
   {
     if ( fish.get(i).isGone() )
@@ -64,7 +80,6 @@ void draw()
       fish.remove(i);
     }
   }
-
   if ( fish.size() == 0 || random(1.0) > odds )
   {
     addFish();
