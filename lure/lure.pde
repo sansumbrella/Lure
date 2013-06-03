@@ -5,6 +5,7 @@ Fish fish;
 
 float suffocation_line;
 float water_surface;
+Boolean running = false;
 
 void setup()
 {
@@ -18,11 +19,23 @@ void setup()
   smooth();
 }
 
+void startGame()
+{
+  worm.setAerial();
+  worm.moveTo( new PVector( 20, water_surface - 10 ) );
+  worm.shove( new PVector( 20, -24 ), new PVector( 20, water_surface - 10 ) );
+//  worm.flex( 0, new PVector( 10, -10 ) );
+  running = true;
+}
+
 void draw()
 {
+  if ( running )
+  {
+    worm.update();
+  }
   background( 30, 20, 40 );
   mountain.draw();
-  worm.update();
   worm.draw();
   fish.draw();
   drawWater();
@@ -30,20 +43,27 @@ void draw()
 
 void drawWater()
 {
-  strokeWeight( 0.5 );
-  stroke( 0, 255, 255 );
+  strokeWeight( 1 );
   // surface
   // oxygenated zone
   // low oxygen zone
+  stroke( 0, 127, 127 );
   line( width * 0.25, water_surface, width * 0.75, water_surface );
+  stroke( 0, 180, 180 );
   line( width * 0.1, water_surface + 3, width * 0.9, water_surface + 3 );
-  line( width * 0.01, water_surface + 8, width * 0.99, water_surface + 8 );
+  stroke( 0, 255, 255 );
+  line( 0, water_surface + 8, width, water_surface + 8 );
   stroke( 100, 20, 100 );
   for ( int i = 0; i < 90; ++i )
   {
     float x = map( i, 0, 90, 0, width );
     line( x, suffocation_line, x + 2, suffocation_line );
   }
+}
+
+void mousePressed()
+{
+  startGame();
 }
 
 void keyPressed()

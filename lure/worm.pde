@@ -5,12 +5,14 @@ class Worm
   color oxygenated = color(255, 20, 40);
   color depleted = color( 60, 10, 60 );
   float health = 1.0;
-  float damping = 0.85;
+  float min_height = water_surface + 5;
+  float max_height = height - 3;
   float writhingness = 0;
+
   Worm()
   {
-    float x = width / 2;
-    float y = water_surface;
+    float x = width / 2 - 40;
+    float y = min_height;
     segments = new ArrayList<Node>();
     springs = new ArrayList<Spring>();
     for ( int i = 0; i < 8; ++i )
@@ -40,6 +42,23 @@ class Worm
     return t;
   }
   
+  void setAerial()
+  {
+    min_height = 0;
+    for( Node n : segments )
+    {
+      n.damping = 0.99;
+    }
+  }
+  void setUnderwater()
+  {
+    min_height = water_surface + 5;
+    for( Node n : segments )
+    {
+      n.damping = 0.9;
+    }
+  }
+  
   PVector center()
   {
     PVector c = new PVector(0, 0);
@@ -67,7 +86,7 @@ class Worm
     for ( Node n : segments )
     { // Apply Gravity
       n.y += 0.03;
-      n.y = max( water_surface, min( n.y, height - 2 ) );
+      n.y = max( min_height, min( n.y, max_height ) );
       n.x = max( 0, min( n.x, width ) );
     }
     for ( Node n : segments )
@@ -103,6 +122,32 @@ class Worm
     s.y += force.y * health * 2.0;
     s.x += force.x * health * 2.0;
     writhingness += abs(force.y * health);
+  }
+  
+  void moveTo( PVector loc )
+  {
+    PVector c = center();
+    loc.sub( c );
+    for( Node n : segments )
+    {
+      n.x += loc.x;
+      n.y += loc.y;
+      n.px = n.x;
+      n.py = n.y;
+    }
+  }
+  
+  void shove( PVector force, PVector loc )
+  {
+    for( Node n : segments )
+    {
+      float dx = loc.x - n.x;
+      float dy = loc.y - n.y;
+      float dist2 = dx * dx + dy * dy;
+      dist2 = max( dist2, 0.125 );
+      n.x += force.x / dist2;
+      n.y += force.y / dist2;
+    }
   }
 }
 

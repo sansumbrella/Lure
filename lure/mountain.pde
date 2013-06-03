@@ -11,7 +11,7 @@ class Mountain
    segments.add( new PVector( left, ground ) );
    for( int i = 1; i < 19; ++i )
    {
-     float y = ground - 10 - noise(i, 0, 0) * 40;
+     float y = ground - 10 - noise(i * 0.3) * 80;
      segments.add( new PVector( map(i, 0, 20, left,  right ), y ) );
    }
    segments.add( new PVector( right, ground ) );
