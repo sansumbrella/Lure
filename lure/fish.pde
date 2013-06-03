@@ -59,6 +59,7 @@ class Fish
     {
       nose.x += dx * 0.005;
       nose.y += dy * 0.005;
+      nose.x += 0.01;
     }
     else
     {

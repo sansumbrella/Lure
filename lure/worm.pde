@@ -12,7 +12,7 @@ class Worm
   Boolean flying = false;
   Worm()
   {
-    float x = width / 2 - 40;
+    float x = -40;
     float y = min_height;
     segments = new ArrayList<Node>();
     springs = new ArrayList<Spring>();
