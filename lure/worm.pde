@@ -1,3 +1,4 @@
+// A Worm, as played by the player
 class Worm
 {
   ArrayList<Node> segments;
@@ -95,7 +96,7 @@ class Worm
 
   void update()
   {
-    writhingness *= lerp( 0.85, 0.98, health );
+    writhingness *= lerp( 0.88, 0.98, health );
     writhingness = min( max_writhing, writhingness );
     if ( flying )
     {

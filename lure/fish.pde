@@ -1,3 +1,4 @@
+// A voracious predator
 class Fish
 {
   ArrayList<Node> body;

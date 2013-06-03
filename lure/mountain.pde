@@ -1,3 +1,4 @@
+// A jagged peak in the distance
 class Mountain
 {
   ArrayList<PVector> segments;

@@ -1,4 +1,4 @@
-
+// we need to give the player some information
 class Marquee
 {
   int x, y;

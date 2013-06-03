@@ -1,3 +1,4 @@
+// The stars in the firmament
 class Starfield
 {
   ArrayList<PVector> stars;

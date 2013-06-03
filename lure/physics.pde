@@ -1,3 +1,4 @@
+// Node performs verlet integration
 class Node
 {
   float x, y;
@@ -24,6 +25,7 @@ class Node
   }
 }
 
+// Spring connects two nodes with variable stiffness
 class Spring
 {
   float rest_length;

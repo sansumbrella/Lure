@@ -1,4 +1,9 @@
-
+/**
+Lure, by David Wicks http://sansumbrella.com/
+Available for use under a CC-BY-SA-NC license
+For more information (and to play), see:
+http://sansumbrella.com/things/lure/
+*/
 Worm worm;
 Mountain mountain;
 Starfield stars;
@@ -17,7 +22,6 @@ int game_end_ms = 0;
 
 // HTML Elements
 var fish_counter = document.getElementById("fish_counter");
-var score_display = document.getElementById("score_display");
 
 void setup()
 {
@@ -44,6 +48,7 @@ void startGame()
   running = true;
   alive = true;
   num_fish_tempted = 0;
+  displayTemptedFish();
   game_start_ms = millis();
 }
 
@@ -54,7 +59,6 @@ void wormDrowned()
     alive = false;
     marquee.display( "You drowned." );
     game_end_ms = millis();
-    displayScore( num_fish_tempted * 10 );
   }
 }
 
@@ -66,15 +70,6 @@ void wormEaten( Fish by_fish )
     marquee.display( "You were eaten." );
     game_end_ms = millis();
     worm.setEaten();
-    displayScore( num_fish_tempted * 10 * ceil(by_fish.size - 0.4) );
-  }
-}
-
-void displayScore( int score )
-{
-  if ( score_display != null )
-  {
-    score_display.textContent = "Final Score: " + score;
   }
 }
 
@@ -150,11 +145,15 @@ void mousePressed()
 void fishWasTempted()
 {
   num_fish_tempted += 1;
-  // update page
-  if ( fish_counter != null )
+  displayTemptedFish();
+}
+
+void displayTemptedFish()
+{
+ if ( fish_counter != null )
   {
     fish_counter.textContent = "Fish Tempted: " + num_fish_tempted;
-  }
+  } 
 }
 
 void keyPressed()
