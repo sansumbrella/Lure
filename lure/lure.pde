@@ -50,7 +50,6 @@ void wormDrowned()
     alive = false;
     marquee.display( "You drowned." );
     game_end_ms = millis();
-    println("Drowned after: " + (game_end_ms - game_start_ms) + "ms" );
   }
 }
 
@@ -62,8 +61,6 @@ void wormEaten( Fish by_fish )
     marquee.display( "You were eaten." );
     game_end_ms = millis();
     worm.setEaten();
-    println("Eaten after: " + (game_end_ms - game_start_ms) + "ms" );
-    println("Fish tempted: " + num_fish_tempted );
   }
 }
 
