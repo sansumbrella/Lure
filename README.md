@@ -1,7 +1,10 @@
+# Lure
+
 You are a worm. You are struggling not to drown, but your frantic wriggling is attracting the attention of fish. Good luck.
 
-A game for the Fishing Jam: http://jam.legendaryfisher.com/forum/viewtopic.php?f=3&t=70
-Jam allowed for up to 7 days, I spent about X amount of time
+[Play Lure at sansumbrella.com](http://sansumbrella.com/things/lure/).
+
+Created for the 2013 [Fishing Jam](http://jam.legendaryfisher.com/forum/viewtopic.php?f=3&t=70).
 
 TODO:
 [x] Start a project
